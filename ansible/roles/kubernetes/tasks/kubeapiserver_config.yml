@@ -1,0 +1,10 @@
+---
+#  Apiserver supports StorageClass configuration
+- name: Apiserver add removeSelfLink parameter
+  delegate_to: "{{ groups[docker-master] }}"
+  blockinfile:
+    path: /etc/kubernetes/kube-apiserver.yml
+    marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+    insertafter: "- --tls-private-key-file=/etc/kubernetes/pki/apiserver.key"
+    content: |
+      - --feature-gates=RemoveSelfLink=false
